@@ -176,7 +176,16 @@
 										Add to cart
 									</a>
 								</span>
-								<p><b>Availability:</b> In Stock</p>
+								<p><b>Availability:</b> 
+								<?php $status = get_product($_GET['id'])["StatusProduct"]; 
+								if ($status == 1) {
+									echo "Disponible";
+								} else {
+									echo "Pas disponible";
+								}
+									
+									?>
+							</p>
 								<p><b>Condition:</b> New</p>
 								<p><b>Brand:</b> E-SHOPPER</p>
 								<a href=""><img src="images/product-details/share.png" class="share img-responsive"  alt="" /></a>
