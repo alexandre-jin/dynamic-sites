@@ -1,3 +1,13 @@
+<?php
+
+json_decode($_COOKIE["userCookie"], true)["admin"]; 
+
+$url = "http://localhost:8080/api/user";
+	@$firstName = $_POST['firstName'];
+	@$lastName = $_POST['lastName'];
+	@$password = $_POST['password'];
+	@$email = $_POST['email'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +16,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="">
 	<meta name="author" content="">
-	<title>Home | E-Shopper</title>
+	<title>Login | E-Shopper</title>
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/font-awesome.min.css" rel="stylesheet">
 	<link href="css/prettyPhoto.css" rel="stylesheet">
@@ -26,9 +36,6 @@
 </head><!--/head-->
 
 <body>
-	<?php
-	include "./php/product/product.php";
-	?>
 	<header id="header"><!--header-->
 		<div class="header_top"><!--header_top-->
 			<div class="container">
@@ -36,19 +43,19 @@
 					<div class="col-sm-6">
 						<div class="contactinfo">
 							<ul class="nav nav-pills">
-								<li><a href="#"><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
-								<li><a href="#"><i class="fa fa-envelope"></i> info@domain.com</a></li>
+								<li><a href=""><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
+								<li><a href=""><i class="fa fa-envelope"></i> info@domain.com</a></li>
 							</ul>
 						</div>
 					</div>
 					<div class="col-sm-6">
 						<div class="social-icons pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-								<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-								<li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-								<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+								<li><a href=""><i class="fa fa-facebook"></i></a></li>
+								<li><a href=""><i class="fa fa-twitter"></i></a></li>
+								<li><a href=""><i class="fa fa-linkedin"></i></a></li>
+								<li><a href=""><i class="fa fa-dribbble"></i></a></li>
+								<li><a href=""><i class="fa fa-google-plus"></i></a></li>
 							</ul>
 						</div>
 					</div>
@@ -63,15 +70,40 @@
 						<div class="logo pull-left">
 							<a href="index.php"><img src="images/home/logo.png" alt="" /></a>
 						</div>
+						<div class="btn-group pull-right">
+							<div class="btn-group">
+								<button type="button" class="btn btn-default dropdown-toggle usa"
+									data-toggle="dropdown">
+									USA
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu">
+									<li><a href="">Canada</a></li>
+									<li><a href="">UK</a></li>
+								</ul>
+							</div>
+
+							<div class="btn-group">
+								<button type="button" class="btn btn-default dropdown-toggle usa"
+									data-toggle="dropdown">
+									DOLLAR
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu">
+									<li><a href="">Canadian Dollar</a></li>
+									<li><a href="">Pound</a></li>
+								</ul>
+							</div>
+						</div>
 					</div>
 					<div class="col-sm-8">
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href="profil.php"><i class="fa fa-user"></i> Account</a></li>
-								<li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
+								<li><a href=""><i class="fa fa-user"></i> Account</a></li>
+								<li><a href=""><i class="fa fa-star"></i> Wishlist</a></li>
 								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
 								<li><a href="cart.php"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-								<li><a href="login.php"><i class="fa fa-lock"></i> Login</a></li>
+								<li><a href="login.php" class="active"><i class="fa fa-lock"></i> Login</a></li>
 								<li><a href="#" class="active" id="effacerCookie"><i class="fa fa-lock"></i>
 										Déconnecter</a></li>
 							</ul>
@@ -96,16 +128,17 @@
 						</div>
 						<div class="mainmenu pull-left">
 							<ul class="nav navbar-nav collapse navbar-collapse">
-								<li><a href="index.php" class="active">Home</a></li>
+								<li><a href="index.php">Home</a></li>
 								<li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
 									<ul role="menu" class="sub-menu">
 										<li><a href="shop.html">Products</a></li>
 										<li><a href="product-details.html">Product Details</a></li>
 										<li><a href="checkout.html">Checkout</a></li>
-										<li><a href="cart.html">Cart</a></li>
-										<li><a href="login.php">Login</a></li>
+										<li><a href="cart.php">Cart</a></li>
+										<li><a href="login.php" class="active">Login</a></li>
 										<li><a href="#" class="active" id="effacerCookie"><i class="fa fa-lock"></i>
 												Déconnecter</a></li>
+
 									</ul>
 								</li>
 								<li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
@@ -128,56 +161,28 @@
 			</div>
 		</div><!--/header-bottom-->
 	</header><!--/header-->
-	<!-- attempt to make a button that executes php by Matth -->
+	
 
-
-	<section>
+	<section id="form"><!--form-->
 		<div class="container">
+			<div class="row">
+				<div class="col-sm-4 col-sm-offset-1">
 
-			<div class="col-sm-9 padding-right">
-				<div class="features_items"><!--features_items-->
-					<?php
-					if (isset($_COOKIE["userCookie"]) && json_decode($_COOKIE["userCookie"], true)["admin"]) {
-						echo '<button> <a href="./add_product.php">add product</a></button>';
-					}
-					?>
-					<h2 class="title text-center">Features Items</h2>
-					<div class="wrap_cards">
-
-						<?php
-
-						foreach (get_all_products() as &$product_raw) {
-							$id = $product_raw->ProductId;
-							$product = get_product($id);
-
-							echo '<div class="card_item_main_page">
-								<div class="product-image-wrapper">
-									<div class="single-products">
-											<div class="productinfo text-center">
-												<a href="./product-details.php?id=' . $product_raw->ProductId . '"><img src="' . $product["DescriptionProduct"]["Image"] . '" alt="" /></a>
-												<h2>$' . $product["Price"] . '</h2>
-												<p>' . $product["NameProduct"] . '</p>
-												<a href="./php/product/add_to_cart.php?id=' . $product_raw->ProductId . '" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-									</div>
-									<div class="choose">
-										<ul class="nav nav-pills nav-justified">
-											<li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>';
-						}
-						?>
-					</div>
-
-				</div><!--features_items-->
-
-
+					<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+						First Name: <input type="text" name="firstName"><br>
+						Last Name: <input type="text" name="lastName"><br>
+						Password: <input type="password" name="password"><br>
+						Email: <input type="email" name="email"><br>
+						<input type="submit" value="Submit">
+					</form>
+				</div>
+				<div class="col-sm-4">
+					<div class="signup-form"><!--sign up form-->
+				</div>
 			</div>
 		</div>
-		</div>
-	</section>
+	</section><!--/form-->
+
 
 	<footer id="footer"><!--Footer-->
 		<div class="footer-top">
@@ -267,11 +272,11 @@
 						<div class="single-widget">
 							<h2>Service</h2>
 							<ul class="nav nav-pills nav-stacked">
-								<li><a href="#">Online Help</a></li>
-								<li><a href="#">Contact Us</a></li>
-								<li><a href="#">Order Status</a></li>
-								<li><a href="#">Change Location</a></li>
-								<li><a href="#">FAQ’s</a></li>
+								<li><a href="">Online Help</a></li>
+								<li><a href="">Contact Us</a></li>
+								<li><a href="">Order Status</a></li>
+								<li><a href="">Change Location</a></li>
+								<li><a href="">FAQ’s</a></li>
 							</ul>
 						</div>
 					</div>
@@ -279,11 +284,11 @@
 						<div class="single-widget">
 							<h2>Quock Shop</h2>
 							<ul class="nav nav-pills nav-stacked">
-								<li><a href="#">T-Shirt</a></li>
-								<li><a href="#">Mens</a></li>
-								<li><a href="#">Womens</a></li>
-								<li><a href="#">Gift Cards</a></li>
-								<li><a href="#">Shoes</a></li>
+								<li><a href="">T-Shirt</a></li>
+								<li><a href="">Mens</a></li>
+								<li><a href="">Womens</a></li>
+								<li><a href="">Gift Cards</a></li>
+								<li><a href="">Shoes</a></li>
 							</ul>
 						</div>
 					</div>
@@ -291,11 +296,11 @@
 						<div class="single-widget">
 							<h2>Policies</h2>
 							<ul class="nav nav-pills nav-stacked">
-								<li><a href="#">Terms of Use</a></li>
-								<li><a href="#">Privecy Policy</a></li>
-								<li><a href="#">Refund Policy</a></li>
-								<li><a href="#">Billing System</a></li>
-								<li><a href="#">Ticket System</a></li>
+								<li><a href="">Terms of Use</a></li>
+								<li><a href="">Privecy Policy</a></li>
+								<li><a href="">Refund Policy</a></li>
+								<li><a href="">Billing System</a></li>
+								<li><a href="">Ticket System</a></li>
 							</ul>
 						</div>
 					</div>
@@ -303,11 +308,11 @@
 						<div class="single-widget">
 							<h2>About Shopper</h2>
 							<ul class="nav nav-pills nav-stacked">
-								<li><a href="#">Company Information</a></li>
-								<li><a href="#">Careers</a></li>
-								<li><a href="#">Store Location</a></li>
-								<li><a href="#">Affillate Program</a></li>
-								<li><a href="#">Copyright</a></li>
+								<li><a href="">Company Information</a></li>
+								<li><a href="">Careers</a></li>
+								<li><a href="">Store Location</a></li>
+								<li><a href="">Affillate Program</a></li>
+								<li><a href="">Copyright</a></li>
 							</ul>
 						</div>
 					</div>
@@ -342,13 +347,13 @@
 
 
 	<script src="js/jquery.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.scrollUp.min.js"></script>
 	<script src="js/price-range.js"></script>
+	<script src="js/jquery.scrollUp.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 	<script src="js/jquery.prettyPhoto.js"></script>
 	<script src="js/main.js"></script>
 	<script src="js/cookie.js" type="module"></script>
-	<script src="js/index.js" type="module"></script>
+	<script src="js/login.js" type="module"></script>
 </body>
 
 </html>

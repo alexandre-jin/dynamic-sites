@@ -1,13 +1,4 @@
 <?php
-// ob_start();
-
-
-// $url = "http://localhost:8080/api/user";
-
-// $json_user = file_get_contents($url);
-
-// echo $json_user;
-
 function login()
 {
 	@$email = $_POST['email'];
@@ -57,13 +48,13 @@ function register()
 	$user = json_decode($json_user, $associative = true);
 
 	$found = false;
-
-	for ($i = 0; $i < sizeof($user); $i++) {
-		if ($email == $user[$i]["Email"]) {
-			$found = true;
-			break;
+	
+		for ($i = 0; $i < sizeof($user); $i++) {
+			if ($email == $user[$i]["Email"]) {
+				$found = true;
+				break;
+			}
 		}
-	}
 
 	if ($found) {
 		echo "L'adresse et le mot de passe est déjà pris";
