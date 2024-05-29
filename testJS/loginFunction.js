@@ -50,15 +50,36 @@ async function register() {
     const email = document.getElementById('emailRegister').value;
     const password = document.getElementById('passwordRegister').value;
 
-    const data = {
-        FirstName: firstName,
-        LastName: lastName,
-        Email: email,
-        Password: password
-    };
-
     try {
-        const response = await fetch('http://localhost:5000/users', {
+        // Vérification préalable pour voir si l'email est déjà pris
+        const responseGet = await fetch('http://localhost:5000/users', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!responseGet.ok) {
+            throw new Error('Problem fetching users');
+        }
+
+        const users = await responseGet.json();
+        const emailTaken = users.some(user => user.Email === email);
+
+        if (emailTaken) {
+            alert('Cet email est déjà pris.');
+            return; // Arrêter l'exécution si l'email est déjà utilisé
+        }
+
+        // Continuer avec l'enregistrement si l'email n'est pas pris
+        const data = {
+            FirstName: firstName,
+            LastName: lastName,
+            Email: email,
+            Password: password
+        };
+
+        const responsePost = await fetch('http://localhost:5000/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -66,11 +87,11 @@ async function register() {
             body: JSON.stringify(data)
         });
 
-        if (!response.ok) {
+        if (!responsePost.ok) {
             throw new Error('Network response was not ok');
         }
 
-        const result = await response.json();
+        const result = await responsePost.json();
         alert("Votre compte est bien enregistré");
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
