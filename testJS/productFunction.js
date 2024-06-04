@@ -27,6 +27,22 @@ function getCookie(name) {
     return null;
 }
 
+async function addToCart(userId, productId, quantity = 1) {
+    const response = await fetch(`http://localhost:5000/carts/${userId}/add`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ product_id: productId, quantity: quantity })
+    });
+
+    if (response.ok) {
+        alert('Product added to cart');
+    } else {
+        console.error('Failed to add to cart');
+    }
+}
+
 function fetchProducts() {
     fetch('http://localhost:5000/products')
         .then(response => response.json())
@@ -45,9 +61,9 @@ function fetchProducts() {
                                     </a>
                                     <h2>$${product.Price}</h2>
                                     <p>${product.NameProduct}</p>
-                                    <a href="./php/product/add_to_cart.php?id=${product.ProductId}" class="btn btn-default add-to-cart">
+                                    <button onclick="handleAddToCart(${product.ProductId})" class="btn btn-default add-to-cart">
                                         <i class="fa fa-shopping-cart"></i>Add to cart
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                             <div class="choose">
@@ -62,4 +78,22 @@ function fetchProducts() {
             });
         })
         .catch(error => console.error('Error fetching products:', error));
+}
+
+function handleAddToCart(productId) {
+    const userId = getUserIdFromCookie();
+    if (userId) {
+        addToCart(userId, productId);
+    } else {
+        alert('Please log in to add items to your cart.');
+    }
+}
+
+function getUserIdFromCookie() {
+    const userCookie = getCookie("userCookie");
+    if (userCookie) {
+        const user = JSON.parse(userCookie);
+        return user.userId;
+    }
+    return null;
 }
