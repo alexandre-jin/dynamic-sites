@@ -51,7 +51,6 @@ async function register() {
     const password = document.getElementById('passwordRegister').value;
 
     try {
-        // Vérification préalable pour voir si l'email est déjà pris
         const responseGet = await fetch('http://localhost:5000/users', {
             method: 'GET',
             headers: {
@@ -68,10 +67,9 @@ async function register() {
 
         if (emailTaken) {
             alert('Cet email est déjà pris.');
-            return; // Arrêter l'exécution si l'email est déjà utilisé
+            return;
         }
 
-        // Continuer avec l'enregistrement si l'email n'est pas pris
         const data = {
             FirstName: firstName,
             LastName: lastName,

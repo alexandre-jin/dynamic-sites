@@ -28,18 +28,43 @@ function getCookie(name) {
 }
 
 async function addToCart(userId, productId, quantity = 1) {
-    const response = await fetch(`http://localhost:5000/carts/${userId}/add`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ product_id: productId, quantity: quantity })
-    });
+    console.log(`Adding to cart: userId=${userId}, productId=${productId}, quantity=${quantity}`);
+    const data = {
+        product_id: productId,
+        quantity: quantity
+    };
+    console.log('Body content:', JSON.stringify(data)); 
 
-    if (response.ok) {
-        alert('Product added to cart');
+    try {
+        const response = await fetch(`http://localhost:5000/carts/${userId}/add`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            console.log(result.message);
+            alert('Product added to cart');
+        } else {
+            const errorResult = await response.json();
+            console.error('Failed to add to cart:', errorResult.message);
+            alert('Failed to add to cart: ' + errorResult.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while adding the product to the cart.');
+    }
+}
+
+function handleAddToCart(productId) {
+    const userId = getUserIdFromCookie();
+    if (userId) {
+        addToCart(userId, productId);
     } else {
-        console.error('Failed to add to cart');
+        alert('Please log in to add items to your cart.');
     }
 }
 

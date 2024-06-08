@@ -12,6 +12,7 @@ function fetchProductDetails(productId) {
     fetch(`http://localhost:5000/products/${productId}`)
         .then(response => response.json())
         .then(product => {
+            let isAdmin = checkAdminCookie();
             let productDetails = `
                 <div class="product-details">
                     <img src="${product.Image}" alt="${product.NameProduct}" />
@@ -23,12 +24,25 @@ function fetchProductDetails(productId) {
                     <button onclick="handleAddToCart(${product.ProductId})" class="btn btn-default add-to-cart">
                         <i class="fa fa-shopping-cart"></i>Add to cart
                     </button>
-                    <button onclick="deleteProduct(${product.ProductId})" class="btn btn-danger">Delete Product</button>
-                </div>
             `;
+            if (isAdmin) {
+                productDetails += `
+                    <button onclick="deleteProduct(${product.ProductId})" class="btn btn-danger">Delete Product</button>
+                `;
+            }
+            productDetails += `</div>`;
             document.getElementById('productDetails').innerHTML = productDetails;
         })
         .catch(error => console.error('Error fetching product details:', error));
+}
+
+function checkAdminCookie() {
+    const userCookie = getCookie("userCookie");
+    if (userCookie) {
+        const user = JSON.parse(userCookie);
+        return user.admin;
+    }
+    return false;
 }
 
 async function deleteProduct(productId) {
@@ -59,18 +73,34 @@ async function deleteProduct(productId) {
 }
 
 async function addToCart(userId, productId, quantity = 1) {
-    const response = await fetch(`http://localhost:5000/carts/${userId}/add`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ product_id: productId, quantity: quantity })
-    });
+    console.log(`Adding to cart: userId=${userId}, productId=${productId}, quantity=${quantity}`);
+    const data = {
+        product_id: productId,
+        quantity: quantity
+    };
+    console.log('Body content:', JSON.stringify(data)); 
 
-    if (response.ok) {
-        alert('Product added to cart');
-    } else {
-        console.error('Failed to add to cart');
+    try {
+        const response = await fetch(`http://localhost:5000/carts/${userId}/add`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            console.log(result.message);
+            alert('Product added to cart');
+        } else {
+            const errorResult = await response.json();
+            console.error('Failed to add to cart:', errorResult.message);
+            alert('Failed to add to cart: ' + errorResult.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while adding the product to the cart.');
     }
 }
 
