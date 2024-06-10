@@ -7,7 +7,7 @@ function checkUserLoggedIn() {
     if (userCookie) {
         const user = JSON.parse(userCookie);
         const userStatusDiv = document.getElementById('userStatus');
-        userStatusDiv.innerHTML = `<p>Vous êtes connecté en tant que ${user.admin ? 'admin' : 'utilisateur'}.</p>`;
+        userStatusDiv.innerHTML = `<p class="alert alert-success">Vous êtes connecté en tant que ${user.admin ? 'admin' : 'utilisateur'}.</p>`;
         
         document.getElementById('form_container').style.display = 'none';
         document.getElementById('logoutButton').style.display = 'block';

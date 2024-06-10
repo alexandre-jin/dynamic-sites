@@ -35,15 +35,15 @@ function fetchProductDetails(productId) {
                     <h2>${product.NameProduct}</h2>
                     <p>Type: ${product.TypeProduct}</p>
                     <p>Description: ${product.DescriptionProduct}</p>
-                    <p>Price: $${product.Price}</p>
+                    <p>Price: ${product.Price}€</p>
                     <p>Status: ${availability}</p>
                     <button onclick="handleAddToCart(${product.ProductId})" class="btn btn-default add-to-cart" ${product.StatusProduct == 1 ? '' : 'disabled'}>
-                        <i class="fa fa-shopping-cart"></i>Add to cart
+                        <i class="fa fa-shopping-cart"></i>Ajouter au panier
                     </button>
             `;
             if (isAdmin) {
                 productDetails += `
-                    <button onclick="deleteProduct(${product.ProductId})" class="btn btn-danger">Delete Product</button>
+                    <button onclick="deleteProduct(${product.ProductId})" class="btn btn-danger">Supprimer</button>
                 `;
             }
             productDetails += `</div>`;

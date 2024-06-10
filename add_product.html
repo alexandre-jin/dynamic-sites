@@ -4,63 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Product</title>
+    <script src="./JSFunction/add_product.js"></script>
+    <link rel="stylesheet" href="./css/add_product.css">
 </head>
 <body>
     <h2>Create Product</h2>
     <form id="createProductForm">
         <label for="nameProduct">Product Name:</label>
-        <input type="text" id="nameProduct" name="nameProduct" required><br><br>
+        <input type="text" id="nameProduct" name="nameProduct" required oninput="updatePreview()"><br><br>
         <label for="typeProduct">Product Type:</label>
-        <input type="text" id="typeProduct" name="typeProduct" required><br><br>
+        <input type="text" id="typeProduct" name="typeProduct" required oninput="updatePreview()"><br><br>
         <label for="descriptionProduct">Description:</label>
-        <input type="text" id="descriptionProduct" name="descriptionProduct" required><br><br>
+        <input type="text" id="descriptionProduct" name="descriptionProduct" required oninput="updatePreview()"><br><br>
         <label for="price">Price:</label>
-        <input type="number" id="price" name="price" required><br><br>
+        <input type="number" id="price" name="price" required oninput="updatePreview()"><br><br>
         <label for="statusProduct">Status:</label>
-        <input type="text" id="statusProduct" name="statusProduct" required><br><br>
+        <input type="text" id="statusProduct" name="statusProduct" required oninput="updatePreview()"><br><br>
         <label for="image">Image URL:</label>
-        <input type="text" id="image" name="image" required><br><br>
+        <input type="text" id="image" name="image" required oninput="updatePreview()"><br><br>
         <button type="button" onclick="createProduct()">Create Product</button>
     </form>
 
-    <script>
-        function createProduct() {
-            var nameProduct = document.getElementById('nameProduct').value;
-            var typeProduct = document.getElementById('typeProduct').value;
-            var descriptionProduct = document.getElementById('descriptionProduct').value;
-            var price = document.getElementById('price').value;
-            var statusProduct = document.getElementById('statusProduct').value;
-            var image = document.getElementById('image').value;
-
-            var data = {
-                NameProduct: nameProduct,
-                TypeProduct: typeProduct,
-                DescriptionProduct: descriptionProduct,
-                Price: price,
-                StatusProduct: statusProduct,
-                Image: image
-            };
-
-            fetch('http://localhost:5000/products', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(function(response) {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(function(result) {
-                alert(result.message);
-            })
-            .catch(function(error) {
-                console.error('There was a problem with the fetch operation:', error);
-            });
-        }
-    </script>
+    <div id="preview">
+        <h3>Product Preview</h3>
+        <img id="previewImage" src="" alt="Product Image">
+        <p><strong>Name:</strong> <span id="previewName"></span></p>
+        <p><strong>Type:</strong> <span id="previewType"></span></p>
+        <p><strong>Description:</strong> <span id="previewDescription"></span></p>
+        <p><strong>Price:</strong> <span id="previewPrice">€</span></p>
+        <p><strong>Status:</strong> <span id="previewStatus"></span></p>
+    </div>
 </body>
 </html>

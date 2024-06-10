@@ -101,18 +101,13 @@ function fetchProducts() {
                                     <a href="./product-details.html?id=${product.ProductId}">
                                         <img src="${product.Image}" alt="${product.NameProduct}" />
                                     </a>
-                                    <h2>$${product.Price}</h2>
+                                    <h2>${product.Price}€</h2>
                                     <p>${product.NameProduct}</p>
                                     <p>${availability}</p>
                                     <button onclick="handleAddToCart(${product.ProductId})" class="btn btn-default add-to-cart" ${product.StatusProduct == 1 ? '' : 'disabled'}>
-                                        <i class="fa fa-shopping-cart"></i>Add to cart
+                                        <i class="fa fa-shopping-cart"></i>Ajouter au panier
                                     </button>
                                 </div>
-                            </div>
-                            <div class="choose">
-                                <ul class="nav nav-pills nav-justified">
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                </ul>
                             </div>
                         </div>
                     </div>
