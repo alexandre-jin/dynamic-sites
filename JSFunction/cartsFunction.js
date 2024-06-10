@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-    checkUserLoggedIn()
+    checkUserLoggedIn();
     const userId = getUserIdFromCookie();
     if (userId) {
         getCart(userId);
@@ -45,6 +45,28 @@ async function getCart(userId) {
     }
 }
 
+async function updateQuantity(userId, productId, quantity) {
+    try {
+        const response = await fetch(`http://localhost:5000/carts/${userId}/update`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ product_id: productId, quantity: quantity })
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            console.log(result.message);
+            getCart(userId);
+        } else {
+            console.error('Failed to update quantity');
+        }
+    } catch (error) {
+        console.error('Error updating quantity:', error);
+    }
+}
+
 async function removeFromCart(userId, productId) {
     try {
         const response = await fetch(`http://localhost:5000/carts/${userId}/remove`, {
@@ -86,13 +108,16 @@ function displayCartItems(cartItems) {
         `;
 
         cartItems.forEach(item => {
-            console.log(item);
             let total = item.Price * item.Quantity;
             table += `
                 <tr>
                     <td><a href="./product-details.html?id=${item.ProductId}"><img src="${item.Image}" alt="${item.NameProduct}" width="100"></a></td>
                     <td>$${item.Price}</td>
-                    <td>${item.Quantity}</td>
+                    <td>
+                        <button onclick="updateQuantity(${item.CartId}, ${item.ProductId}, ${item.Quantity - 1})">-</button>
+                        ${item.Quantity}
+                        <button onclick="updateQuantity(${item.CartId}, ${item.ProductId}, ${item.Quantity + 1})">+</button>
+                    </td>
                     <td>$${total}</td>
                     <td><button onclick="removeFromCart(${item.CartId}, ${item.ProductId})">Remove</button></td>
                 </tr>
