@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     if (productId) {
         fetchProductDetails(productId);
     } else {
-        document.getElementById('productDetails').innerHTML = '<p>Product ID is missing.</p>';
+        console.log("Product ID is missing");
     }
 });
 
@@ -37,7 +37,7 @@ function fetchProductDetails(productId) {
             let availability = product.StatusProduct == 1 ? 'Disponible' : 'Non disponible';
             let productDetails = `
                 <div class="product-details">
-                    <img src="${product.Image}" alt="${product.NameProduct}" />
+                    <img src="${product.Image}" alt="${product.NameProduct}"/>
                     <h2>${product.NameProduct}</h2>
                     <p>Type: ${product.TypeProduct}</p>
                     <p>Description: ${product.DescriptionProduct}</p>
@@ -121,11 +121,11 @@ function addToCart(userId, productId, quantity = 1) {
     })
     .then(result => {
         console.log(result.message);
-        alert('Product added to cart');
+        alert('Produit ajouté au panier');
     })
     .catch(error => {
-        console.error('Failed to add to cart:', error.message);
-        alert('Failed to add to cart: ' + error.message);
+        console.error('Echec ajout de produit:', error.message);
+        alert('Echec ajout de produit: ' + error.message);
     });
 }
 
@@ -134,7 +134,7 @@ function handleAddToCart(productId) {
     if (userId) {
         addToCart(userId, productId);
     } else {
-        alert('Please log in to add items to your cart.');
+        alert('Connectez-vous pour ajouter un produit dans votre panier');
     }
 }
 

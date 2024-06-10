@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     if (productId) {
         fetchProductDetails(productId);
     } else {
-        document.getElementById('productInfo').innerHTML = '<p>Product ID is missing.</p>';
+        console.log("Product ID is missing")
     }
 
     document.getElementById('nameProduct').addEventListener('input', updatePreview);
@@ -63,7 +63,7 @@ async function fetchProductDetails(productId) {
         `;
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
-        document.getElementById('productInfo').innerHTML = '<p>Failed to load product details.</p>';
+        document.getElementById('productInfo').innerHTML = '<p>Echec de chargement du produit</p>';
     }
 }
 
@@ -104,6 +104,6 @@ async function updateProduct() {
         }
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
-        alert('Failed to update product');
+        alert('Echec de mise à jour du produit');
     }
 }

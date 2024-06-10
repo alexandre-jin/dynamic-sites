@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     if (userId) {
         getCart(userId);
     } else {
-        document.getElementById('cartItems').innerHTML = '<p>Please log in to view your cart.</p>';
+        document.getElementById('cartItems').innerHTML = '<p>Veuilez-vous connecter</p>';
     }
 });
 
@@ -37,11 +37,11 @@ async function getCart(userId) {
             displayCartItems(cartItems);
         } else {
             console.error('Failed to fetch cart');
-            document.getElementById('cartItems').innerHTML = '<p>Failed to load cart items.</p>';
+            document.getElementById('cartItems').innerHTML = '<p>Echec de chargement du panier</p>';
         }
     } catch (error) {
         console.error('Error fetching cart:', error);
-        document.getElementById('cartItems').innerHTML = '<p>Failed to load cart items.</p>';
+        document.getElementById('cartItems').innerHTML = '<p>Echec de chargement du panier</p>';
     }
 }
 
@@ -78,7 +78,7 @@ async function removeFromCart(userId, productId) {
         });
 
         if (response.ok) {
-            alert('Product removed from cart');
+            alert('Produit supprimé');
             getCart(userId);
         } else {
             console.error('Failed to remove from cart');
@@ -130,7 +130,7 @@ function displayCartItems(cartItems) {
         `;
         cartContainer.innerHTML = table;
     } else {
-        cartContainer.innerHTML = '<p>Your cart is empty.</p>';
+        cartContainer.innerHTML = '<p>Votre panier est vide</p>';
     }
 }
 

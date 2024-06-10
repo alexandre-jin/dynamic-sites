@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     fetchProducts();
 });
 
-
 function checkUserLoggedIn() {
     const userCookie = getCookie("userCookie");
     if (userCookie) {
@@ -67,11 +66,11 @@ async function addToCart(userId, productId, quantity = 1) {
         } else {
             const errorResult = await response.json();
             console.error('Failed to add to cart:', errorResult.message);
-            alert("Echec ajout de produit: " + errorResult.message);
+            alert('Failed to add to cart: ' + errorResult.message);
         }
     } catch (error) {
         console.error('Error:', error);
-        alert('Une erreur est survenu');
+        alert('An error occurred while adding the product to the cart.');
     }
 }
 
@@ -80,7 +79,7 @@ function handleAddToCart(productId) {
     if (userId) {
         addToCart(userId, productId);
     } else {
-        alert('Connectz-vous pour ajouter un produit dans votre panier');
+        alert('Please log in to add items to your cart.');
     }
 }
 
@@ -91,7 +90,9 @@ function fetchProducts() {
             let wrapCards = document.querySelector('.wrap_cards');
             wrapCards.innerHTML = '';
 
-            data.forEach(product => {
+            // Limite le nombre de produits affichés à 5
+            for (let i = 0; i < Math.min(data.length, 5); i++) {
+                let product = data[i];
                 let availability = product.StatusProduct == 1 ? 'Disponible' : 'Non disponible';
                 let productCard = `
                     <div class="card_item_main_page">
@@ -113,9 +114,18 @@ function fetchProducts() {
                     </div>
                 `;
                 wrapCards.innerHTML += productCard;
-            });
+            }
         })
         .catch(error => console.error('Error fetching products:', error));
+}
+
+function handleAddToCart(productId) {
+    const userId = getUserIdFromCookie();
+    if (userId) {
+        addToCart(userId, productId);
+    } else {
+        alert('Please log in to add items to your cart.');
+    }
 }
 
 function getUserIdFromCookie() {

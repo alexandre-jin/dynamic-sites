@@ -1,0 +1,10 @@
+.product-details img {
+    max-width: 500px;
+    height: auto;
+}
+.product-details {
+    text-align: start;
+}
+.product-details button {
+    margin: 5px;
+}
