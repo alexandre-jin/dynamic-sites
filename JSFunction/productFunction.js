@@ -1,7 +1,23 @@
 document.addEventListener('DOMContentLoaded', (event) => {
+    checkUserLoggedIn();
     checkAdminCookie();
     fetchProducts();
 });
+
+
+function checkUserLoggedIn() {
+    const userCookie = getCookie("userCookie");
+    if (userCookie) {
+        const user = JSON.parse(userCookie);
+        document.getElementById('logoutButton').style.display = 'block';
+    }
+}
+
+function logout() {
+    document.cookie = "userCookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    alert('Vous êtes déconnecté !');
+    location.reload();
+}
 
 function checkAdminCookie() {
     const userCookie = getCookie("userCookie");
@@ -73,9 +89,10 @@ function fetchProducts() {
         .then(response => response.json())
         .then(data => {
             let wrapCards = document.querySelector('.wrap_cards');
-            wrapCards.innerHTML = ''; // Clear existing content
+            wrapCards.innerHTML = '';
 
             data.forEach(product => {
+                let availability = product.StatusProduct == 1 ? 'Disponible' : 'Non disponible';
                 let productCard = `
                     <div class="card_item_main_page">
                         <div class="product-image-wrapper">
@@ -86,7 +103,8 @@ function fetchProducts() {
                                     </a>
                                     <h2>$${product.Price}</h2>
                                     <p>${product.NameProduct}</p>
-                                    <button onclick="handleAddToCart(${product.ProductId})" class="btn btn-default add-to-cart">
+                                    <p>${availability}</p>
+                                    <button onclick="handleAddToCart(${product.ProductId})" class="btn btn-default add-to-cart" ${product.StatusProduct == 1 ? '' : 'disabled'}>
                                         <i class="fa fa-shopping-cart"></i>Add to cart
                                     </button>
                                 </div>

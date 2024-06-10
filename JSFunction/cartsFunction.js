@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', (event) => {
+    checkUserLoggedIn()
     const userId = getUserIdFromCookie();
     if (userId) {
         getCart(userId);
@@ -6,6 +7,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
         document.getElementById('cartItems').innerHTML = '<p>Please log in to view your cart.</p>';
     }
 });
+
+function checkUserLoggedIn() {
+    const userCookie = getCookie("userCookie");
+    if (userCookie) {
+        const user = JSON.parse(userCookie);
+        document.getElementById('logoutButton').style.display = 'block';
+    }
+}
+
+function logout() {
+    document.cookie = "userCookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    alert('Vous êtes déconnecté !');
+    location.reload();
+}
 
 async function getCart(userId) {
     try {
@@ -54,16 +69,41 @@ async function removeFromCart(userId, productId) {
 function displayCartItems(cartItems) {
     const cartContainer = document.getElementById('cartItems');
     cartContainer.innerHTML = '';
+
     if (cartItems.length > 0) {
+        let table = `
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
         cartItems.forEach(item => {
-            const cartItem = document.createElement('div');
-            cartItem.classList.add('cart-item');
-            cartItem.innerHTML = `
-                <p>${item.NameProduct || 'Unknown Product'} - Quantity: ${item.Quantity || 0} - Price: $${item.Price || 0}</p>
-                <button onclick="removeFromCart(${item.CartId}, ${item.ProductId})">Remove</button>
+            console.log(item);
+            let total = item.Price * item.Quantity;
+            table += `
+                <tr>
+                    <td><a href="./product-details.html?id=${item.ProductId}"><img src="${item.Image}" alt="${item.NameProduct}" width="100"></a></td>
+                    <td>$${item.Price}</td>
+                    <td>${item.Quantity}</td>
+                    <td>$${total}</td>
+                    <td><button onclick="removeFromCart(${item.CartId}, ${item.ProductId})">Remove</button></td>
+                </tr>
             `;
-            cartContainer.appendChild(cartItem);
         });
+
+        table += `
+                </tbody>
+            </table>
+        `;
+        cartContainer.innerHTML = table;
     } else {
         cartContainer.innerHTML = '<p>Your cart is empty.</p>';
     }

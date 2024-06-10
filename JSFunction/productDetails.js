@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', (event) => {
+    checkUserLoggedIn();
     const params = new URLSearchParams(window.location.search);
     const productId = params.get('id');
     if (productId) {
@@ -8,11 +9,26 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
 });
 
+function checkUserLoggedIn() {
+    const userCookie = getCookie("userCookie");
+    if (userCookie) {
+        const user = JSON.parse(userCookie);
+        document.getElementById('logoutButton').style.display = 'block';
+    }
+}
+
+function logout() {
+    document.cookie = "userCookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    alert('Vous êtes déconnecté !');
+    location.reload();
+}
+
 function fetchProductDetails(productId) {
     fetch(`http://localhost:5000/products/${productId}`)
         .then(response => response.json())
         .then(product => {
             let isAdmin = checkAdminCookie();
+            let availability = product.StatusProduct == 1 ? 'Disponible' : 'Non disponible';
             let productDetails = `
                 <div class="product-details">
                     <img src="${product.Image}" alt="${product.NameProduct}" />
@@ -20,8 +36,8 @@ function fetchProductDetails(productId) {
                     <p>Type: ${product.TypeProduct}</p>
                     <p>Description: ${product.DescriptionProduct}</p>
                     <p>Price: $${product.Price}</p>
-                    <p>Status: ${product.StatusProduct}</p>
-                    <button onclick="handleAddToCart(${product.ProductId})" class="btn btn-default add-to-cart">
+                    <p>Status: ${availability}</p>
+                    <button onclick="handleAddToCart(${product.ProductId})" class="btn btn-default add-to-cart" ${product.StatusProduct == 1 ? '' : 'disabled'}>
                         <i class="fa fa-shopping-cart"></i>Add to cart
                     </button>
             `;
@@ -45,34 +61,35 @@ function checkAdminCookie() {
     return false;
 }
 
-async function deleteProduct(productId) {
+function deleteProduct(productId) {
     const apiUrl = `http://localhost:5000/products/${productId}`;
 
-    try {
-        const response = await fetch(apiUrl, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (response.ok) {
-            const result = await response.json();
-            console.log(result.message);
-            alert('Produit supprimé !');
-            window.location.href = 'index.html';
-        } else {
-            const errorResult = await response.json();
-            console.error('Erreur dans la suppression du produit :', errorResult.message);
-            alert('Erreur dans la suppression du produit : ' + errorResult.message);
+    fetch(apiUrl, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
         }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('An error occurred while deleting the product');
-    }
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(errorResult => {
+                throw new Error(errorResult.message);
+            });
+        }
+        return response.json();
+    })
+    .then(result => {
+        console.log(result.message);
+        alert('Produit supprimé !');
+        window.location.href = 'index.html';
+    })
+    .catch(error => {
+        console.error('Erreur dans la suppression du produit :', error.message);
+        alert('Erreur dans la suppression du produit : ' + error.message);
+    });
 }
 
-async function addToCart(userId, productId, quantity = 1) {
+function addToCart(userId, productId, quantity = 1) {
     console.log(`Adding to cart: userId=${userId}, productId=${productId}, quantity=${quantity}`);
     const data = {
         product_id: productId,
@@ -80,28 +97,29 @@ async function addToCart(userId, productId, quantity = 1) {
     };
     console.log('Body content:', JSON.stringify(data)); 
 
-    try {
-        const response = await fetch(`http://localhost:5000/carts/${userId}/add`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-
-        if (response.ok) {
-            const result = await response.json();
-            console.log(result.message);
-            alert('Product added to cart');
-        } else {
-            const errorResult = await response.json();
-            console.error('Failed to add to cart:', errorResult.message);
-            alert('Failed to add to cart: ' + errorResult.message);
+    fetch(`http://localhost:5000/carts/${userId}/add`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(errorResult => {
+                throw new Error(errorResult.message);
+            });
         }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('An error occurred while adding the product to the cart.');
-    }
+        return response.json();
+    })
+    .then(result => {
+        console.log(result.message);
+        alert('Product added to cart');
+    })
+    .catch(error => {
+        console.error('Failed to add to cart:', error.message);
+        alert('Failed to add to cart: ' + error.message);
+    });
 }
 
 function handleAddToCart(productId) {

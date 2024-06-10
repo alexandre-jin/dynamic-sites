@@ -1,3 +1,25 @@
+document.addEventListener('DOMContentLoaded', (event) => {
+    checkUserLoggedIn();
+});
+
+function checkUserLoggedIn() {
+    const userCookie = getCookie("userCookie");
+    if (userCookie) {
+        const user = JSON.parse(userCookie);
+        const userStatusDiv = document.getElementById('userStatus');
+        userStatusDiv.innerHTML = `<p>Vous êtes connecté en tant que ${user.admin ? 'admin' : 'utilisateur'}.</p>`;
+        
+        document.getElementById('form_container').style.display = 'none';
+        document.getElementById('logoutButton').style.display = 'block';
+    }
+}
+
+function logout() {
+    document.cookie = "userCookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    alert('Vous êtes déconnecté !');
+    location.reload();
+}
+
 async function login() {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
@@ -36,6 +58,7 @@ async function login() {
             };
             document.cookie = `userCookie=${JSON.stringify(cookieValue)}; path=/`;
             alert('Vous êtes connecté !');
+            location.reload();
         } else {
             alert("Ce compte n'est pas valide");
         }
@@ -91,7 +114,21 @@ async function register() {
 
         const result = await responsePost.json();
         alert("Votre compte est bien enregistré");
+        location.reload();
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
     }
+}
+
+function getCookie(name) {
+    let cookieArr = document.cookie.split(";");
+
+    for (let i = 0; i < cookieArr.length; i++) {
+        let cookiePair = cookieArr[i].split("=");
+
+        if (name == cookiePair[0].trim()) {
+            return decodeURIComponent(cookiePair[1]);
+        }
+    }
+    return null;
 }

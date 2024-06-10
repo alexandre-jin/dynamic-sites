@@ -14,6 +14,7 @@
 	<link href="css/animate.css" rel="stylesheet">
 	<link href="css/main.css" rel="stylesheet">
 	<link href="css/responsive.css" rel="stylesheet">
+	<script src="./JSFunction/productFunction.js"></script>
 	<!--[if lt IE 9]>
 	<script src="js/html5shiv.js"></script>
 	<script src="js/respond.min.js"></script>
@@ -26,9 +27,6 @@
 </head><!--/head-->
 
 <body>
-	<?php
-	include "./php/product/product.php";
-	?>
 	<header id="header"><!--header-->
 		<div class="header_top"><!--header_top-->
 			<div class="container">
@@ -36,19 +34,17 @@
 					<div class="col-sm-6">
 						<div class="contactinfo">
 							<ul class="nav nav-pills">
-								<li><a href="#"><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
-								<li><a href="#"><i class="fa fa-envelope"></i> info@domain.com</a></li>
 							</ul>
 						</div>
 					</div>
 					<div class="col-sm-6">
 						<div class="social-icons pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-								<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-								<li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-								<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+								<li><a href=""><i class="fa fa-facebook"></i></a></li>
+								<li><a href=""><i class="fa fa-twitter"></i></a></li>
+								<li><a href=""><i class="fa fa-linkedin"></i></a></li>
+								<li><a href=""><i class="fa fa-dribbble"></i></a></li>
+								<li><a href=""><i class="fa fa-google-plus"></i></a></li>
 							</ul>
 						</div>
 					</div>
@@ -61,19 +57,16 @@
 				<div class="row">
 					<div class="col-sm-4">
 						<div class="logo pull-left">
-							<a href="index.php"><img src="images/home/logo.png" alt="" /></a>
+							<a href="index.html"><img src="images/home/logo.png" alt="" /></a>
 						</div>
 					</div>
 					<div class="col-sm-8">
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href="profil.php"><i class="fa fa-user"></i> Account</a></li>
-								<li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
-								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-								<li><a href="cart.php"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-								<li><a href="login.php"><i class="fa fa-lock"></i> Login</a></li>
-								<li><a href="#" class="active" id="effacerCookie"><i class="fa fa-lock"></i>
-										Déconnecter</a></li>
+								<li><a href=""><i class="fa fa-user"></i> Account</a></li>
+								<li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+								<li><a href="login.html" class="active"><i class="fa fa-lock"></i> Login</a></li>
+								<button id="logoutButton" style="display:none;" class="btn btn-default" onclick="logout()">Logout</button>
 							</ul>
 						</div>
 					</div>
@@ -86,8 +79,7 @@
 				<div class="row">
 					<div class="col-sm-9">
 						<div class="navbar-header">
-							<button type="button" class="navbar-toggle" data-toggle="collapse"
-								data-target=".navbar-collapse">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 								<span class="sr-only">Toggle navigation</span>
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
@@ -96,26 +88,13 @@
 						</div>
 						<div class="mainmenu pull-left">
 							<ul class="nav navbar-nav collapse navbar-collapse">
-								<li><a href="index.php" class="active">Home</a></li>
+								<li><a href="index.html">Home</a></li>
 								<li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
 									<ul role="menu" class="sub-menu">
 										<li><a href="shop.html">Products</a></li>
-										<li><a href="product-details.html">Product Details</a></li>
-										<li><a href="checkout.html">Checkout</a></li>
 										<li><a href="cart.html">Cart</a></li>
-										<li><a href="login.php">Login</a></li>
-										<li><a href="#" class="active" id="effacerCookie"><i class="fa fa-lock"></i>
-												Déconnecter</a></li>
 									</ul>
 								</li>
-								<li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
-									<ul role="menu" class="sub-menu">
-										<li><a href="blog.html">Blog List</a></li>
-										<li><a href="blog-single.html">Blog Single</a></li>
-									</ul>
-								</li>
-								<li><a href="404.html">404</a></li>
-								<li><a href="contact-us.html">Contact</a></li>
 							</ul>
 						</div>
 					</div>
@@ -128,7 +107,6 @@
 			</div>
 		</div><!--/header-bottom-->
 	</header><!--/header-->
-	<!-- attempt to make a button that executes php by Matth -->
 
 
 	<section>
@@ -136,41 +114,14 @@
 
 			<div class="col-sm-9 padding-right">
 				<div class="features_items"><!--features_items-->
-					<?php
-					if (isset($_COOKIE["userCookie"]) && json_decode($_COOKIE["userCookie"], true)["admin"]) {
-						echo '<button> <a href="./add_product.php">add product</a></button>';
-					}
-					?>
 					<h2 class="title text-center">Features Items</h2>
+					<button id="addProductButton" style="display:none;">
+						<a href="./add_product.html">Add Product</a>
+					</button>
+					<br><br>
 					<div class="wrap_cards">
 
-						<?php
-
-						foreach (get_all_products() as &$product_raw) {
-							$id = $product_raw->ProductId;
-							$product = get_product($id);
-
-							echo '<div class="card_item_main_page">
-								<div class="product-image-wrapper">
-									<div class="single-products">
-											<div class="productinfo text-center">
-												<a href="./product-details.php?id=' . $product_raw->ProductId . '"><img src="' . $product["DescriptionProduct"]["Image"] . '" alt="" /></a>
-												<h2>$' . $product["Price"] . '</h2>
-												<p>' . $product["NameProduct"] . '</p>
-												<a href="./php/product/add_to_cart.php?id=' . $product_raw->ProductId . '" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-									</div>
-									<div class="choose">
-										<ul class="nav nav-pills nav-justified">
-											<li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>';
-						}
-						?>
 					</div>
-
 				</div><!--features_items-->
 
 
