@@ -1,53 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Edit Product</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+    
+    <script src="./JSFunction/editProduct.js"></script>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <div class="container mt-5">
-        <h2>Edit Product</h2>
-        <div id="productInfo" class="mb-5"></div>
-        <form id="editProductForm">
-            <div class="form-group">
-                <label for="nameProduct">Product Name:</label>
-                <input type="text" class="form-control" id="nameProduct" name="nameProduct">
-            </div>
-            <div class="form-group">
-                <label for="typeProduct">Product Type:</label>
-                <input type="text" class="form-control" id="typeProduct" name="typeProduct">
-            </div>
-            <div class="form-group">
-                <label for="descriptionProduct">Description:</label>
-                <input type="text" class="form-control" id="descriptionProduct" name="descriptionProduct">
-            </div>
-            <div class="form-group">
-                <label for="price">Price:</label>
-                <input type="number" class="form-control" id="price" name="price">
-            </div>
-            <div class="form-group">
-                <label for="statusProduct">Status:</label>
-                <input type="text" class="form-control" id="statusProduct" name="statusProduct">
-            </div>
-            <div class="form-group">
-                <label for="image">Image URL:</label>
-                <input type="text" class="form-control" id="image" name="image">
-            </div>
-            <button type="button" class="btn btn-primary" onclick="updateProduct()">Update Product</button>
-        </form>
-        <div id="preview" class="mt-5">
-            <h3>Product Preview</h3>
-            <img id="previewImage" src="" alt="Product Image" style="max-width: 200px;">
-            <p id="previewName"></p>
-            <p id="previewType"></p>
-            <p id="previewDescription"></p>
-            <p id="previewPrice"></p>
-            <p id="previewStatus"></p>
+      <h2>Edit Product</h2>
+      <div id="productInfo" class="mb-5"></div>
+      <form id="editProductForm">
+        <div class="form-group">
+          <label for="nameProduct">Product Name:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="nameProduct"
+            name="nameProduct"
+          />
         </div>
+        <div class="form-group">
+          <label for="typeProduct">Product Type:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="typeProduct"
+            name="typeProduct"
+          />
+        </div>
+        <div class="form-group">
+          <label for="descriptionProduct">Description:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="descriptionProduct"
+            name="descriptionProduct"
+          />
+        </div>
+        <div class="form-group">
+          <label for="price">Price:</label>
+          <input type="number" class="form-control" id="price" name="price" />
+        </div>
+        <div class="form-group">
+          <label for="statusProduct">Status:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="statusProduct"
+            name="statusProduct"
+          />
+        </div>
+        <div class="form-group">
+          <label for="image">Image URL:</label>
+          <input type="text" class="form-control" id="image" name="image" />
+        </div>
+        <button type="button" class="btn btn-primary" onclick="updateProduct()">
+          Update Product
+        </button>
+      </form>
+      <div id="preview" class="mt-5">
+        <h3>Product Preview</h3>
+        <img
+          id="previewImage"
+          src=""
+          alt="Product Image"
+          style="max-width: 200px"
+        />
+        <p id="previewName"></p>
+        <p id="previewType"></p>
+        <p id="previewDescription"></p>
+        <p id="previewPrice"></p>
+        <p id="previewStatus"></p>
+      </div>
     </div>
-
-    <script src="editProduct.js"></script>
-</body>
+  </body>
 </html>

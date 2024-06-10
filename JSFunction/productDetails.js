@@ -23,6 +23,12 @@ function logout() {
     location.reload();
 }
 
+function redirectToEditPage() {
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get('id');
+    window.location.href = `edit_product.html?id=${productId}`;
+}
+
 function fetchProductDetails(productId) {
     fetch(`http://localhost:5000/products/${productId}`)
         .then(response => response.json())
@@ -45,6 +51,7 @@ function fetchProductDetails(productId) {
                 productDetails += `
                     <button onclick="deleteProduct(${product.ProductId})" class="btn btn-danger">Supprimer</button>
                 `;
+                document.getElementById('editProductButton').style.display = 'block';
             }
             productDetails += `</div>`;
             document.getElementById('productDetails').innerHTML = productDetails;
