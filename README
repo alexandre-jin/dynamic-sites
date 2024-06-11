@@ -1,13 +1,17 @@
 Amazune est un site web dynamique qui propose une plateforme d'e-commerce semblable à celle d'Amazon.
 
-Fonctionnalités Principales
-Authentification des utilisateurs : Inscription, connexion et déconnexion.
-Gestion des produits : Ajout, modification et suppression de produits.
-Gestion des paniers d'achat : Ajouter et supprimer des produits dans le panier.
-Visualisation des produits : Parcourir et visualiser les produits disponibles.
-Aperçu du produit : Voir un aperçu avant la création ou la modification d'un produit.
-Déploiement
-Pour déployer Amazune, suivez les étapes décrites dans cet article : Héberger un site web avec le serveur web Apache2.
+Fonctionnalités Principales : 
 
-Lancement
-Pour lancer le site, entrez l'IP de votre serveur dans votre navigateur.
+- Authentification des utilisateurs : Inscription, connexion et déconnexion.
+- Gestion des produits : Ajout, modification et suppression de produits.
+- Gestion des paniers d'achat : Ajouter et supprimer des produits dans le panier.
+- Visualisation des produits : Parcourir et visualiser les produits disponibles.
+- Aperçu du produit : Voir un aperçu avant la création ou la modification d'un produit.
+
+Déploiement : 
+
+- Pour déployer Amazune, suivez les étapes décrites dans cet article : Héberger un site web avec le serveur web Apache2.
+
+Lancement :
+
+- Pour lancer le site, entrez l'IP de votre serveur dans votre navigateur.
