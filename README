@@ -1,15 +1,13 @@
-Amazune est un site web dynamique qui propose une plateforme d'e-commerce semblable à celle d'Amazon. Voici un résumé des principales fonctionnalités du site :
+Amazune est un site web dynamique qui propose une plateforme d'e-commerce semblable à celle d'Amazon.
 
-  - Authentification des utilisateurs (inscription, connexion, déconnexion)
-  - Gestion des produits (ajout, modification, suppression)
-  - Gestion des paniers d'achat
-  - Visualisation des produits
-  - Aperçu du produit avant création/modification
+Fonctionnalités Principales
+Authentification des utilisateurs : Inscription, connexion et déconnexion.
+Gestion des produits : Ajout, modification et suppression de produits.
+Gestion des paniers d'achat : Ajouter et supprimer des produits dans le panier.
+Visualisation des produits : Parcourir et visualiser les produits disponibles.
+Aperçu du produit : Voir un aperçu avant la création ou la modification d'un produit.
+Déploiement
+Pour déployer Amazune, suivez les étapes décrites dans cet article : Héberger un site web avec le serveur web Apache2.
 
-Déploiement : 
-
-Suivez ces démarches : https://linuxhaiti.wordpress.com/2019/01/30/heberger-un-site-web-avec-le-serveur-web-apache2/
-
-Lancement : 
-
-Taper l'ip de votrer serveur 
+Lancement
+Pour lancer le site, entrez l'IP de votre serveur dans votre navigateur.
