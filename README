@@ -1,6 +1,4 @@
-DESCs
-
-Fonctionnalités: 
+Amazune est un site web dynamique qui propose une plateforme d'e-commerce semblable à celle d'Amazon. Voici un résumé des principales fonctionnalités du site :
 
   - Authentification des utilisateurs (inscription, connexion, déconnexion)
   - Gestion des produits (ajout, modification, suppression)
@@ -10,5 +8,8 @@ Fonctionnalités:
 
 Déploiement : 
 
+Suivez ces démarches : https://linuxhaiti.wordpress.com/2019/01/30/heberger-un-site-web-avec-le-serveur-web-apache2/
 
 Lancement : 
+
+Taper l'ip de votrer serveur 
