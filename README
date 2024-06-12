@@ -1,5 +1,9 @@
 Amazune est un site web dynamique qui propose une plateforme d'e-commerce semblable à celle d'Amazon.
 
+Important : 
+
+- Oubliez pas de changer le lien des requêtes fetch par rapport à votre infrastructure ! 
+
 Fonctionnalités Principales : 
 
 - Authentification des utilisateurs : Inscription, connexion et déconnexion.
