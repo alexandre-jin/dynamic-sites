@@ -62,15 +62,15 @@ async function addToCart(userId, productId, quantity = 1) {
         if (response.ok) {
             const result = await response.json();
             console.log(result.message);
-            alert('Product added to cart');
+            alert('Produit ajouté au panier');
         } else {
             const errorResult = await response.json();
-            console.error('Failed to add to cart:', errorResult.message);
-            alert('Failed to add to cart: ' + errorResult.message);
+            console.error('Echec ajout au panier:', errorResult.message);
+            alert('Echec ajout au panier: ' + errorResult.message);
         }
     } catch (error) {
         console.error('Error:', error);
-        alert('An error occurred while adding the product to the cart.');
+        alert('Une erreur est survenu');
     }
 }
 
@@ -79,7 +79,7 @@ function handleAddToCart(productId) {
     if (userId) {
         addToCart(userId, productId);
     } else {
-        alert('Please log in to add items to your cart.');
+        alert('Connectez-vous pour ajouter un produit dans votre panier');
     }
 }
 
@@ -90,8 +90,7 @@ function fetchProducts() {
             let wrapCards = document.querySelector('.wrap_cards');
             wrapCards.innerHTML = '';
 
-            // Limite le nombre de produits affichés à 5
-            for (let i = 0; i < Math.min(data.length, 5); i++) {
+            for (let i = 0; i < 5; i++) {
                 let product = data[i];
                 let availability = product.StatusProduct == 1 ? 'Disponible' : 'Non disponible';
                 let productCard = `
