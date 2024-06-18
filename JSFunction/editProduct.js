@@ -6,13 +6,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     } else {
         console.log("Product ID is missing")
     }
-
-    document.getElementById('nameProduct').addEventListener('input', updatePreview);
-    document.getElementById('typeProduct').addEventListener('input', updatePreview);
-    document.getElementById('descriptionProduct').addEventListener('input', updatePreview);
-    document.getElementById('price').addEventListener('input', updatePreview);
-    document.getElementById('statusProduct').addEventListener('input', updatePreview);
-    document.getElementById('image').addEventListener('input', updatePreview);
 });
 
 let originalProductDetails = {};
