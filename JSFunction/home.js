@@ -118,15 +118,6 @@ function fetchProducts() {
         .catch(error => console.error('Error fetching products:', error));
 }
 
-function handleAddToCart(productId) {
-    const userId = getUserIdFromCookie();
-    if (userId) {
-        addToCart(userId, productId);
-    } else {
-        alert('Please log in to add items to your cart.');
-    }
-}
-
 function getUserIdFromCookie() {
     const userCookie = getCookie("userCookie");
     if (userCookie) {
